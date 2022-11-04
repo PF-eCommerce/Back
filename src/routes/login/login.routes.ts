@@ -4,7 +4,7 @@ import {body} from 'express-validator'
 const router = express.Router()
 
 
-router.post('/register/user',  body('userName').isEmail(), body('password').isLength({ min: 5 }),
+router.post('/register/user',  body('password').isLength({ min: 5 }), body('email').isEmail().normalizeEmail(),
  userFunction.postUser)
 
 

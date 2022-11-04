@@ -59,3 +59,12 @@ export  interface IUser {
     size : string[];
     color : string[];
   }
+
+
+  export interface postIProduct {
+    title: string;
+    desc: string;
+    img: string[];
+    price: number;
+    
+  }
