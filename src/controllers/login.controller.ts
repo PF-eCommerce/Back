@@ -29,7 +29,7 @@ export const postUser = async (req : Request, res: Response) : Promise< Response
       const user = new User({ userName, email, password: encriptPassword});
       await user.save();
      
-      res.status(200).json(user);
+      res.status(201).json(user);
     } catch (error) {
         console.log(error)
     }
