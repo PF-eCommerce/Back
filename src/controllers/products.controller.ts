@@ -15,8 +15,9 @@ export const postProduct = async (req : Request , res: Response) : Promise< Resp
         }
 
         const product =  new Product({title , desc , img, price, numStock})
-        await product.save();
+        
         await new Category({_id : product._id ,type, size , color}).save()
+        await product.save();
 
         return res.status(201).json(product)
     } catch (error) {
