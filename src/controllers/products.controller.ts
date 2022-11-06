@@ -48,3 +48,34 @@ export const getCategory = async (_req : Request , res: Response) : Promise<Resp
         
     }
 }
+
+export const getProductById = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
+    try {
+        const id = req.params.id
+        const product = await Product.findById(id);
+        if (product){
+
+            return res.status(200).json(product)
+        }else{
+            return res.status(204).json({error:true, msg: "No existe el producto"})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteProduct = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
+    try {
+        const id = req.params.id
+        const product = await Product.findById(id);
+        if (product){
+            product.exists = false;
+           const update = await product.save()
+            return res.status(200).json(update)
+        }else{
+            return res.status(204).json({error:true, msg: "No existe el producto"})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
