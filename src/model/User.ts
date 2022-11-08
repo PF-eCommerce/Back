@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import {IUser} from '../types'
-
+import { generateId } from '../Helper/generateIdToken';
   
 const UserSchema = new mongoose.Schema<IUser>({
     image: {
@@ -26,8 +26,8 @@ const UserSchema = new mongoose.Schema<IUser>({
       default: false,
     },
     token: {
-      type: String,
-     
+      type: String ,
+      default : generateId()
     },
   
     confirmed: {
