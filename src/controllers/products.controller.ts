@@ -26,21 +26,24 @@ export const postProduct = async (req : Request , res: Response) =>  {
     }
 }
 
-export const getProduct = async (_req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
-     
- 
+export const getProduct = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
      
     try {
 
-        const allProducts = await Product.find()
-      
+        const options = {
+            limit: 10,
+            page: parseInt(req.query.page as string),
+        }
+        const allProducts = await Product.paginate({}, options)
+        
 
         if(allProducts.length === 0) return res.status(204).json({msg : "no existe ningun product"})
 
-         res.status(200).json(allProducts)
+        return res.status(200).json(allProducts)
     } catch (error) {
         console.log(error)
     }
+  
 }
 
 export const getCategory = async (_req : Request , res: Response) : Promise<Response<any, Record<string, any>>|void> => {
