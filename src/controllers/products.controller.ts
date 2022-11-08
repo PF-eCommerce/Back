@@ -24,7 +24,7 @@ export const postProduct = async (req : Request , res: Response) : Promise< Resp
     }
 }
 
-export const getProduct = async (req : Request<IPaginado>, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
+export const getProduct = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
     try {
 
         const options = {
