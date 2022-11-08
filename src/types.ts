@@ -1,11 +1,26 @@
-import { Schema } from 'mongoose'
+import { Schema, Types } from 'mongoose'
 
+//interfaz para el req.body del controller de user
 export interface registerUser {
     userName : string
     email : string
     password : string
 }
 
+
+// type req.body auth login
+
+export type authLogin = Omit<registerUser, 'userName'>
+
+//interfaz para el model User
+
+export interface IUserAuth  {
+ 
+  id : Types.ObjectId
+  userName : string
+  email : string
+  admin : boolean
+}
 export interface IUser extends registerUser {
     image: string; 
     admin : boolean
@@ -58,7 +73,11 @@ export interface IUser extends registerUser {
     size : string[];
     color : string[];
   }
-
+  
+  export interface IchangePassword {
+    inputPass : string
+    updatedPassword : string
+  }
   // este type es lo que recibira por req.body para la categoria del producto
   export type noIdCategory = Omit<ICategory, "product">
 
