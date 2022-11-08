@@ -13,6 +13,10 @@ export interface IUser extends registerUser {
     confirmed : boolean
    
   }
+export interface IPaginado {
+  limit: number;
+  page: number;
+}
 
   export interface postIProduct {
     title: string;
