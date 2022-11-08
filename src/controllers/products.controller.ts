@@ -2,7 +2,6 @@ import Product from '../model/Product'
 import Category from '../model/Category'
 import {postIProduct, noIdCategory} from '../types'
 import {Request, Response} from 'express'
-
 export const postProduct = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void>  =>  {
       
     const {title , desc , img, price, numStock } : postIProduct  = req.body
@@ -25,9 +24,15 @@ export const postProduct = async (req : Request , res: Response) : Promise< Resp
     }
 }
 
-export const getProduct = async (_req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
+export const getProduct = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
     try {
-        const allProducts = await Product.find()
+
+        const options = {
+            limit: 10,
+            page: parseInt(req.query.page as string),
+        }
+        const allProducts = await Product.paginate({}, options)
+        
 
         if(allProducts.length === 0) return res.status(204).json({msg : "no existe ningun product"})
 
