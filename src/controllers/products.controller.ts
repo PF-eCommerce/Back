@@ -1,6 +1,6 @@
 import Product from '../model/Product'
 import Category from '../model/Category'
-import {postIProduct, noIdCategory, IPaginado} from '../types'
+import {postIProduct, noIdCategory} from '../types'
 import {Request, Response} from 'express'
 export const postProduct = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void>  =>  {
       
