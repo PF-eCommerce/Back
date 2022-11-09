@@ -1,5 +1,5 @@
-import { Schema, Types } from 'mongoose'
-
+import { Types } from 'mongoose'
+import { Request } from 'express'
 //interfaz para el req.body del controller de user
 export interface registerUser {
     userName : string
@@ -35,6 +35,9 @@ export interface IUser extends registerUser {
     img: string[];
     price: number;
     numStock: number;
+    type: string;
+    size : string[];
+    color : string[];
     
   }
 
@@ -67,18 +70,14 @@ export interface IUser extends registerUser {
     VESTIDOS = "Vestidos"
   }
 
-  export  interface ICategory {
-    product: Schema.Types.ObjectId;
-    type: string;
-    size : string[];
-    color : string[];
-  }
+
   
   export interface IchangePassword {
     inputPass : string
     updatedPassword : string
   }
-  // este type es lo que recibira por req.body para la categoria del producto
-  export type noIdCategory = Omit<ICategory, "product">
+  
 
-
+  export interface IAuthid extends Request {
+    userId : string
+  }
