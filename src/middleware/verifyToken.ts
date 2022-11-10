@@ -1,11 +1,17 @@
-import User from "../model/User";
-import jwt, {JwtPayload} from 'jsonwebtoken' 
-import { Request, Response, NextFunction } from "express";
-import {IUserAuth} from '../types'
-export interface CustomRequest extends Request {
-    token: string | JwtPayload;
+
+import jwt from 'jsonwebtoken' 
+import express from "express";
+
+
+
+
+
+export interface IPayload{
+    id : string
+    iat : number,
+    exp : number
    }
-export const verifyToken = async (req : Request, res : Response, next : NextFunction) => {
+export const verifyToken = async (req : express.Request, res : express.Response, next : express.NextFunction) => {
 
     const token = req.header('Bearer')
 
@@ -13,21 +19,15 @@ export const verifyToken = async (req : Request, res : Response, next : NextFunc
         res.status(400).json({error : true, msg: 'acceso denegado'})
         return
     }
- try {
-    
-    const verify = jwt.verify(token , `${process.env.JWT_SEC}`)
+   
+    try {
+        const verify = jwt.verify(token , `${process.env.JWT_SEC}`) 
 
+          req.app.locals.id =  typeof verify === 'object' && verify.id
         
-       
+        next()
+    } catch (error) {
+        console.log(error)
     }
-
     
-
- } catch (error) {
-    const e = new Error ('Token no valido')
-     res.status(403).json({msg: e.message})
- }
-    
-
-
 };
