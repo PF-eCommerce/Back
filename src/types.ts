@@ -53,7 +53,7 @@ export interface IUser extends registerUser {
     MODA = "Accesorio",
     SHORTS = "Shorts",
     BLUSAS = "Blusas",
-    CALZADO = "Calzas",
+    CALZADO = "Zapatillas",
     CAMISAS = "Camisas",
     ENTERITOS = "Enteritos",
     EQUIPAJE = "Equipaje",

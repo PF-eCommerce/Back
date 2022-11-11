@@ -1,6 +1,8 @@
 import Product from '../model/Product'
 import {postIProduct} from '../types'
 import {Request, Response} from 'express'
+//import { type } from './../types';
+
 
 export const postProduct = async (req : Request , res: Response) =>  {
       
@@ -24,18 +26,50 @@ export const postProduct = async (req : Request , res: Response) =>  {
     }
 }
 
+export const getBySearch = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void>=> {
+    try{
+    
+    const options = {
+        limit: 10,
+        page: parseInt(req.query.page as string),
+    }   
+
+       const search = req.body.search as string
+       const searchCase : string = '/^'+`${search}`+'/i' 
+       //console.log(searchCase)
+
+        let allProducts = await Product.paginate({  $or : [ {title: {$regex: search } } , {type: {$regex: searchCase }} , {desc: {$regex: search }} ]}, options)
+    
+        return res.status(200).json(allProducts) 
+    }catch(error){
+        console.log(error)
+   }
+}
+
+
 export const getProduct = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
-     
+     console.log('getProduct')
     try {
 
         const options = {
             limit: 10,
             page: parseInt(req.query.page as string),
         }
-        const allProducts = await Product.paginate({}, options)
         
+        const type = req.body.type as string 
+       
+        const size  = req.body.size as string
+        
+        const color = req.body.color as string
+    
+        /* 
+        no tiene $regedex por lo que el match debe ser exacto 
+        IMPORTANTE  el parametro que no se use debe ser recibido como null
+        */
 
-        if(allProducts.length === 0) return res.status(204).json({msg : "no existe ningun product"})
+    const allProducts = await Product.paginate( {$or :[{type}, {size} , {color:color} ] }, options)
+    
+    if(allProducts.length === 0 ) return res.status(204).json({msg : "no existe ningun product"})
 
         return res.status(200).json(allProducts)
     } catch (error) {
