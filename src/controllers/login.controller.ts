@@ -5,6 +5,7 @@ import { validationResult } from 'express-validator'
 import { generateJWT } from '../Helper/generateJWT'
 import { generateId } from '../Helper/generateIdToken'
 import bcrypt from 'bcrypt'
+import _ from 'mongoose-paginate-v2'
 
 
 
@@ -42,9 +43,24 @@ export const postUser = async (req : Request, res: Response) : Promise< Response
 
 export const perfil = async (req : Request, res : Response)   => {
      try {
-   
+     
       const userData = await User.findById(req.app.locals.id)
-      res.status(200).json(userData)
+      
+   
+       if(userData == null) {
+        res.status(400).json({msg : 'dato del usuario no existen'})
+           return
+       }
+
+      const user = {
+        _id: userData._id,
+     userName : userData.userName,
+     email: userData.email,
+     admin: userData.admin,
+     confirmed: userData.confirmed,
+ 
+      }
+      res.status(200).json(user)
      } catch (error) {
       
      }
