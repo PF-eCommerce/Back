@@ -1,7 +1,7 @@
 import Product from '../model/Product'
 import {postIProduct} from '../types'
 import {Request, Response} from 'express'
-//import { type } from './../types';
+
 
 
 export const postProduct = async (req : Request , res: Response) =>  {
@@ -35,8 +35,7 @@ export const getBySearch = async (req : Request , res: Response) : Promise< Resp
     }   
 
        const search = req.body.search as string
-       const searchCase : string = '/^'+`${search}`+'/i' 
-       //console.log(searchCase)
+       const searchCase = search[0].toUpperCase() + search.substring(1)
 
         let allProducts = await Product.paginate({  $or : [ {title: {$regex: search } } , {type: {$regex: searchCase }} , {desc: {$regex: search }} ]}, options)
     
@@ -48,7 +47,7 @@ export const getBySearch = async (req : Request , res: Response) : Promise< Resp
 
 
 export const getProduct = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
-     console.log('getProduct')
+     
     try {
 
         const options = {
