@@ -1,12 +1,12 @@
-const nodemailer = require('nodemailer')
+import nodemailer from 'nodemailer'
 
-const transports = nodemailer.createTransport({
+export const transports = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure : true,
     auth : {
         user : 'tresbien.ecommerce@gmail.com',
-        pass : process.env.EMAIL_PASS
+        pass : 'vxrowmmihsasxeya'
     },
 });
 
@@ -14,4 +14,3 @@ transports.verify().then(() => {
     console.log('listo para enviar correos')
 })
 
-module.exports = transports;

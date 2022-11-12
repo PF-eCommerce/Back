@@ -81,3 +81,18 @@ export interface IUser extends registerUser {
   export interface IAuthid extends Request {
     userId : string
   }
+
+ export interface Iregister {
+    userName : string
+    email : string 
+    token : string
+}
+
+export type IforgotPassword  = Omit<Iregister, 'userName'>
+
+
+export interface Ipayment {
+  link : string
+  local : string
+   email : string
+}

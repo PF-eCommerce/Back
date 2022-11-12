@@ -1,25 +1,25 @@
-const transports = require('./mailer')
+import {transports } from './mailer'
+import {Iregister, IforgotPassword, Ipayment} from '../../types'
 
-module.exports = {
-    emailRegister : async (datos) =>{
+    export const emailRegister = async (datos : Iregister) =>{
         
-        const {username, email , token } = datos
+        const {userName, email , token } = datos
 
-        const info = await transports.sendMail({
+         await transports.sendMail({
         from : `"TresBien - eCommerce Indumentaria" <tresbien.ecommerce@gmail.com>`,
         to: email,
         subject : "Comprueba tu cuenta en TresBien",
         text : "Comprueba tu cuenta en TresBien",
-        html : `<p>Hola ${username}, comprueba tu cuenta de TresBien.</p>
+        html : `<p>Hola ${userName}, comprueba tu cuenta de TresBien.</p>
         <p> Tu cuenta esta lista, solo debes comprobarla en el siguiente enlace</p>
             <a href="${process.env.FRONTEND_URL}/confirm/${token}">Comprobar cuenta</a>
             <p>Si tu no creaste esta cuenta, puedes ignorar este email</p>`
         })
-    },
-    forgotPasswordSendEmail : async (datos) =>{
+    }
+   export const forgotPasswordSendEmail = async (datos : IforgotPassword) =>{
         const {email, token } = datos
         
-        const info = await transports.sendMail({
+         await transports.sendMail({
             from : `"TresBien - eCommerce Indumentaria" <tresbien.ecommerce@gmail.com>`,
             to: email,
             subject : 'Olvidaste tu Contraseña',
@@ -28,10 +28,10 @@ module.exports = {
             <a href="${process.env.FRONTEND_URL}/changePassword/${token}">Cambiar la password</a> </p>
             <p> Si tu no solicitaste el cambio de contraseña por "olvidaste tu contraseña", alguien intenta hackearte </p>`
             })
-    },
-    emailPayment : async (link,local, email) =>{
-       
-        const info = await transports.sendMail({
+    }
+    export const emailPayment = async (datos : Ipayment) =>{
+          const {link,local, email} = datos
+            await transports.sendMail({
             from : `"TresBien - eCommerce Indumentaria" <tresbien.ecommerce@gmail.com>`,
             to: email,
             subject : 'Tu orden',
@@ -41,5 +41,5 @@ module.exports = {
                     <a href="${link}">proceder a comprar</a> </p>
                     <p> Si tu ya hiciste la compra , puedes obviar este email</p>`
         })
-    },
-}
+    }
+

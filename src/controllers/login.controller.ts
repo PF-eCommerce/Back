@@ -6,7 +6,7 @@ import { generateJWT } from '../Helper/generateJWT'
 import { generateId } from '../Helper/generateIdToken'
 import bcrypt from 'bcrypt'
 import _ from 'mongoose-paginate-v2'
-
+import {emailRegister, forgotPasswordSendEmail} from '../Helper/mailer/msjMailer'
 
 
 
@@ -31,7 +31,8 @@ export const postUser = async (req : Request, res: Response) : Promise< Response
      const encriptPassword = await bcrypt.hash(password, 10)
      const user = new User({ userName, email, password: encriptPassword});
      await user.save();
-    
+      
+     emailRegister({userName, email, token : user.token})
      res.status(201).json(user);
    } catch (error) {
        console.log(error)
@@ -165,7 +166,7 @@ export const authenticate = async (req : Request, res : Response) => {
   
       await userExists.save();
   
-      //forgotPasswordSendEmail({ email, token: userExists.token });
+      forgotPasswordSendEmail({ email, token: userExists.token });
       res.json({ msg: "Hemos enviado un email con las instrucciones" });
      
     } catch (error) {
