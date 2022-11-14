@@ -34,7 +34,7 @@ export const getBySearch = async (req : Request , res: Response) : Promise< Resp
         page: parseInt(req.query.page as string),
     }   
 
-       const search = req.body.search as string
+       const search = req.query.search as string
        const searchCase = search[0].toUpperCase() + search.substring(1)
 
         let allProducts = await Product.paginate({  $or : [ {title: {$regex: search } } , {type: {$regex: searchCase }} , {desc: {$regex: search }} ]}, options)
@@ -54,19 +54,18 @@ export const getProduct = async (req : Request , res: Response) : Promise< Respo
             limit: 10,
             page: parseInt(req.query.page as string),
         }
-        
-        const type = req.body.type as string 
+        const type = req.query.type as string 
        
-        const size  = req.body.size as string
+        const size  = req.query.size as string
         
-        const color = req.body.color as string
+        const color = req.query.color as string
     
         /* 
         no tiene $regedex por lo que el match debe ser exacto 
         IMPORTANTE  el parametro que no se use debe ser recibido como null
         */
 
-    const allProducts = await Product.paginate( {$or :[{type}, {size} , {color:color} ] }, options)
+    const allProducts = await Product.paginate( {$or :[{type}, {size} , {color} ] }, options)
     
     if(allProducts.length === 0 ) return res.status(204).json({msg : "no existe ningun product"})
 
