@@ -74,10 +74,10 @@ export async function captureOrder(token: any) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-    })
+    });
     const data = await handleResponse(response);
     return data;
   } catch (error) {
-    console.log("/helper/paypal/captureOrder", error)
+    console.log("/helper/paypal/captureOrder", error);
   }
 }

@@ -7,10 +7,10 @@ export const createOrderPaypal = async (_req: Request, res: Response) => {
 
   try{
     const response = await helper.createOrder()
-    res.json(response)
+    res.json(response);
 
   } catch (error) {
-    res.json(error)
+    res.json(error);
   }
 
 }
@@ -27,7 +27,7 @@ export const captureOrderPaypal = async (req: Request, res: Response) => {
     res.redirect("http://localhost:3000/wenas")//TODO: Insertar redireccion
 
   } catch (error) {
-    console.log("/controles/pasarela/captureOrder", error)
+    console.log("/controles/pasarela/captureOrder", error);
   }
 }
 
