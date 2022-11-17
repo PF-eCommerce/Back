@@ -107,3 +107,16 @@ export const deleteProduct = async (req : Request , res: Response) : Promise< Re
         console.log(error)
     }
 }
+export const updateProduct = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> =>   {
+    const id = req.params.id;
+    try {
+        const product = await Product.findByIdAndUpdate(id,{$set: req.body}, {new: true} );
+            if (product){
+                return res.status(200).json(product)
+            }
+            return res.status(400).json({error: true, msg: "No se encontró el producto"})
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
