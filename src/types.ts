@@ -96,3 +96,12 @@ export interface Ipayment {
   local : string
    email : string
 }
+export interface ICustomer {
+  userId: Types.ObjectId,
+  name: string,
+  lastName: string,
+  country: string, 
+  city: string,
+  spent: number,
+  sizes: string[]
+}
