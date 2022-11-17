@@ -88,6 +88,8 @@ export interface IUser extends registerUser {
     token : string
 }
 
+
+
 export type IforgotPassword  = Omit<Iregister, 'userName'>
 
 
@@ -100,6 +102,7 @@ export interface ICustomer {
   userId: Types.ObjectId,
   name: string,
   lastName: string,
+  email: string,
   country: string, 
   city: string,
   spent: number,
