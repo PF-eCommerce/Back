@@ -14,6 +14,10 @@ const CustomerSchema = new mongoose.Schema<ICustomer>({
       type: String,
       required: true  
     },
+    email:{
+      type: String,
+      required: true  
+    },
     country:{
         type: String,
         required: true  
