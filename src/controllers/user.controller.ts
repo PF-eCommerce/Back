@@ -3,8 +3,8 @@ import {Request, Response} from 'express'
 import Customer from '../model/Customer'
 
 export const getAllUser = async (_req: Request, res: Response) => {
-       try {
-         const allUsers = await User.find()
+  try {
+    const allUsers = await User.find();
 
          res.status(200).json(allUsers)
        } catch (error) {
