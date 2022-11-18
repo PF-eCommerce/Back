@@ -108,3 +108,17 @@ export interface ICustomer {
   spent: number,
   sizes: string[]
 }
+
+export interface IAuth0User {
+  email: string,
+  email_verified : boolean,
+  name: string,
+  nickname : string,
+  picture : string,
+  sub : string,
+  updated_at : string
+}
+
+export interface IAuth0Model extends IAuth0User {
+  admin : boolean
+}
