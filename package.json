@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "start": "node build/index.js",
+    "start": "ts-node-dev index.ts",
     "dev": "ts-node-dev index.ts"
   },
   "repository": {
