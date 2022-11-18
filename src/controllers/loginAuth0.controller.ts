@@ -1,5 +1,24 @@
 import {Request, Response } from 'express'
 import axios from 'axios'
+import { IAuth0User } from '../types'
+import UserAuth0 from '../model/UserAuth0'
+
+// export const registerUser = async (req : Request , res : Response) => {
+//         const {email,email_verified,
+//              name,nickname,picture,sub,updated_at} : IAuth0User = req.body
+//     try {
+//         const newUser = await UserAuth0.find({sub})
+
+//         if(!newUser) {
+//             const user = new UserAuth0({email,email_verified,
+//                 name,nickname,picture,sub,updated_at})
+
+//                 res.status(201).json(user)
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 export const getUser = async (req : Request , res : Response) => {
      
@@ -10,9 +29,23 @@ export const getUser = async (req : Request , res : Response) => {
                 authorization : `Bearer ${accessToken}`
             }
         })
-
-        res.send(userInfo.data)
+         
+        const {email,email_verified,
+            name,nickname,picture,sub,updated_at} : IAuth0User = userInfo.data
+            const newUser = await UserAuth0.find({sub})
+           console.log(newUser)
+            if(newUser.length === 0) {
+              const user = new UserAuth0({email,email_verified,
+                    name,nickname,picture,sub,updated_at})
+                    await user.save()
+    
+                    res.status(200).json(user)
+            }
+       
+        res.status(200).json(...newUser)
     } catch (error) {
         
     }
+
+ 
  }

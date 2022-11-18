@@ -18,8 +18,8 @@ const verifyJwt = expressjwt({
     algorithms: ['RS256']
  })
 
- router.use(verifyJwt)
 
- router.get('/protected', authFunction.getUser)
+
+ router.get('/protected',verifyJwt, authFunction.getUser)
 
  export default router
