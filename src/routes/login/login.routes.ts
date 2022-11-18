@@ -1,5 +1,5 @@
 import express from "express";
-
+import { verifyToken } from "../../middleware/verifyToken";
 import * as userFunction from "../../controllers/login.controller";
 import { body } from "express-validator";
 const router = express.Router();

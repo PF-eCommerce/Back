@@ -21,7 +21,6 @@ export const postUser = async (
     return res.status(400).json({ errors: errors.array() });
   }
 
-<<<<<<< HEAD
   const userExists = User.findOne({ email });
   const nameExists = User.findOne({ userName });
 
@@ -63,34 +62,6 @@ export const perfil = async (req: Request, res: Response) => {
   } catch (error) {}
 };
 export const confirmUser = async (req: Request, res: Response) => {
-=======
-   const userExists = User.findOne({ email })
-   const nameExists =  User.findOne({userName})
-    
-    const userPromiseAll = await Promise.all([userExists, nameExists])
-    const [userExistsPromise, nameExistsPromise] = userPromiseAll
-   if(userExistsPromise ||nameExistsPromise) {
-      
-       return res.status(400).json({ error: true, msg: "usuario ya registrado" });
-   } 
-
-   try {
-     const encriptPassword = await bcrypt.hash(password, 10)
-     const user = new User({ userName, email, password: encriptPassword});
-     await user.save();
-      
-     emailRegister({userName, email, token : user.token})
-     res.status(201).json(user);
-   } catch (error) {
-       console.log(error)
-   }
-
-
-}
-
-
-export const confirmUser = async (req : Request, res : Response) => {
->>>>>>> f7e2cde12e2613cebee090db71300066b31353f0
   const { token } = req.params;
 
   try {

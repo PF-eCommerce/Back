@@ -1,23 +1,11 @@
-<<<<<<< HEAD
-import User from "../model/User";
-import { Request, Response } from "express";
-=======
 import User from '../model/User'
 import {Request, Response} from 'express'
 import Customer from '../model/Customer'
->>>>>>> f7e2cde12e2613cebee090db71300066b31353f0
 
 export const getAllUser = async (_req: Request, res: Response) => {
   try {
     const allUsers = await User.find();
 
-<<<<<<< HEAD
-    res.status(200).json(allUsers);
-  } catch (error) {
-    console.log(error);
-  }
-};
-=======
          res.status(200).json(allUsers)
        } catch (error) {
          console.log(error)
@@ -168,4 +156,3 @@ export const perfil = async (req : Request, res: Response) : Promise< Response<a
    console.log(error)
   }
 }
->>>>>>> f7e2cde12e2613cebee090db71300066b31353f0
