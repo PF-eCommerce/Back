@@ -18,7 +18,9 @@ const ProductSchema = new mongoose.Schema<IProduct>(
 
     },
     size: { type: [String]},
-    color: { type: [String] }
+    color: { type: [String] },
+    rating : { type: Number},
+    numReview : { type: Number}
   }
 );
 
