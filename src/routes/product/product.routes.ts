@@ -7,7 +7,9 @@ const router = express.Router()
 
 router.post('/product', productFunction.postProduct)
 router.get('/products', productFunction.getProduct)
+router.get('/products/search' , productFunction.getBySearch)
 router.get('/products/:id', productFunction.getProductById)
+router.put('/products/:id', productFunction.updateProduct)
 router.delete('/products/:id', productFunction.deleteProduct)
 
 

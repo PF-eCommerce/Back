@@ -53,7 +53,7 @@ export interface IUser extends registerUser {
     MODA = "Accesorio",
     SHORTS = "Shorts",
     BLUSAS = "Blusas",
-    CALZADO = "Calzas",
+    CALZADO = "Zapatillas",
     CAMISAS = "Camisas",
     ENTERITOS = "Enteritos",
     EQUIPAJE = "Equipaje",
@@ -88,6 +88,8 @@ export interface IUser extends registerUser {
     token : string
 }
 
+
+
 export type IforgotPassword  = Omit<Iregister, 'userName'>
 
 
@@ -95,4 +97,28 @@ export interface Ipayment {
   link : string
   local : string
    email : string
+}
+export interface ICustomer {
+  userId: Types.ObjectId,
+  name: string,
+  lastName: string,
+  email: string,
+  country: string, 
+  city: string,
+  spent: number,
+  sizes: string[]
+}
+
+export interface IAuth0User {
+  email: string,
+  email_verified : boolean,
+  name: string,
+  nickname : string,
+  picture : string,
+  sub : string,
+  updated_at : string
+}
+
+export interface IAuth0Model extends IAuth0User {
+  admin : boolean
 }
