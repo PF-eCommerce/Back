@@ -109,6 +109,71 @@ export interface ICustomer {
   sizes: string[]
 }
 
+export interface IorderItem{
+  name: string
+  qty: number
+  image: string
+  price: number
+  product: Types.ObjectId
+  count: number
+  _id: Types.ObjectId
+  title: string
+  quantity: number
+  currency_id: string
+  unit_price: number
+}
+
+export interface Ipayment{
+  name: string
+  lastName: string
+  phone: number
+  address_user: string
+  info: string
+  email: string
+}
+
+export interface Iorder{
+  user: Types.ObjectId
+  orderItems?: IorderItem
+  PaymentMethod: string
+  status: string
+  email_address: string
+  shippingPrice: number
+  totalPrice: number
+  isPaid: boolean
+  paidAt: Date
+  isDelivered: boolean
+  date: Date
+  address: string
+  userPaymentInfo?: Ipayment
+}
+
+export interface Icontroller{
+  name: string
+  count: number
+  price: number
+}
+
+export interface Ilocation{
+  street_name: string
+  street_number: number
+}
+
+export interface IpasarelaCompras{
+  productArray?:IorderItem[]
+  userId:string
+  location?:Ilocation
+  input?:Ipayment
+}
+
+export interface Iitem extends IorderItem{
+  title: string
+  quantity: number
+  currency_id: string
+  unit_price: number
+
+}
+
 export interface IAuth0User {
   email: string,
   email_verified : boolean,
@@ -117,6 +182,10 @@ export interface IAuth0User {
   picture : string,
   sub : string,
   updated_at : string
+}
+
+export interface Ipreference{
+  items:Iitem[]
 }
 
 export interface IAuth0Model extends IAuth0User {
