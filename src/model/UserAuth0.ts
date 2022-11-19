@@ -1,41 +1,39 @@
-import mongoose from 'mongoose'
-import {IAuth0Model} from '../types'
+import mongoose from "mongoose";
+import { IAuth0Model } from "../types";
 
-  
 const UserAuth0Schema = new mongoose.Schema<IAuth0Model>({
-    email: {
-      type: String,
-    },
-    email_verified: {
-      type: Boolean,
-      
-    },
-     name : {
-        type: String,
-     },
+  email: {
+    type: String,
+  },
+  email_verified: {
+    type: Boolean,
+  },
+  name: {
+    type: String,
+  },
 
-     nickname : {
-        type : String,
-     },
+  nickname: {
+    type: String,
+  },
 
-     picture : {
-        type : String,
-     },
+  picture: {
+    type: String,
+  },
 
-     sub : {
-        type : String,
-     },
-     updated_at : {
-        type : String,
-     },
+  sub: {
+    type: String,
+  },
+  updated_at: {
+    type: String,
+  },
 
-     admin: {
-        type: Boolean,
-        required: true,
-        default: false,
-      }
-  });
-  
-  const UserAuth0 = mongoose.model<IAuth0Model>("UserAuth0", UserAuth0Schema);
+  admin: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
 
-  export default UserAuth0
+const UserAuth0 = mongoose.model<IAuth0Model>("UserAuth0", UserAuth0Schema);
+
+export default UserAuth0;
