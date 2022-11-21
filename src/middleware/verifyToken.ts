@@ -20,7 +20,7 @@ export const verifyToken = async (req : express.Request, res : express.Response,
    
     try {
         const verify =  jwt.verify(token , `${process.env.JWT_SEC}`) 
-            console.log(verify)
+            
          req.app.locals.id =  typeof verify === 'object' && verify.id
         
         
