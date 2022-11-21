@@ -68,8 +68,9 @@ const orderSchema = new mongoose.Schema<Iorder>({
     },
 
     address : {
-        type : String,
-        required : true
+        street_name:{type:String},
+        street_number:{type:Number},
+        zip_code:{type:Number}
     },
 
     userPaymentInfo : {

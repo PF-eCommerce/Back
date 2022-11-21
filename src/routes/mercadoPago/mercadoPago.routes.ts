@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { postOrder, notification } from "../../controllers/mercadopago.controller";
+import * as mercadopago from "../../controllers/mercadopago.controller";
 
 const router = Router()
 
-router.post('/post-order/:id', postOrder)
-router.post('/notification', notification)
+router.post('/post-order/:id', mercadopago.postOrder)
+router.post('/notification', mercadopago.notification)
 
 
 export default router

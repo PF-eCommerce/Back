@@ -130,6 +130,7 @@ export interface Ipayment{
   address_user: string
   info: string
   email: string
+  surname: string
 }
 
 export interface Iorder{
@@ -157,6 +158,11 @@ export interface Icontroller{
 export interface Ilocation{
   street_name: string
   street_number: number
+  zip_code: string
+}
+
+export interface Idata{
+  data?:IpasarelaCompras[]
 }
 
 export interface IpasarelaCompras{
