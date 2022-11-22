@@ -1,10 +1,11 @@
 import User from '../model/User'
+import UserAuth0 from '../model/UserAuth0'
 import {Request, Response} from 'express'
 import Customer from '../model/Customer'
 
 export const getAllUser = async (_req: Request, res: Response) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await UserAuth0.find();
 
          res.status(200).json(allUsers)
        } catch (error) {
