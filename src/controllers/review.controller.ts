@@ -16,7 +16,7 @@ export const postReview = async (req: Request , res: Response) => {
         rating: rating,
       });
       const reviewSave = await review.save();
-      console.log('reviewSave:',reviewSave)
+      //console.log('reviewSave:',reviewSave)
       if (reviewSave) {
         const reviews = await Review.find({ product: productId });
         await Product.findByIdAndUpdate(
