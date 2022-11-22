@@ -19,8 +19,11 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     },
     size: { type: [String]},
     color: { type: [String] },
-    rating : { type: Number},
-    numReview : { type: Number}
+    rating : { type: Number, default: 0},
+    numReview : { type: Number, default: 0},
+    comment :  { type: String, required: false},
+    reviews : { type: mongoose.Schema.Types.ObjectId,
+    ref: "Review" }
   }
 );
 
