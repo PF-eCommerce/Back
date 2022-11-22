@@ -210,5 +210,5 @@ export interface Ipreference{
 }
 
 export interface IAuth0Model extends IAuth0User {
-  admin : boolean
+  admin : string[]
 }
