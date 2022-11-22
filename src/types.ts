@@ -1,12 +1,18 @@
 import { Types } from 'mongoose'
 import { Request } from 'express'
 //interfaz para el req.body del controller de user
+
 export interface registerUser {
     userName : string
     email : string
     password : string
 }
 
+export interface reviewUser {
+    userId : string
+    comment : string
+    rating : number
+}
 
 // type req.body auth login
 
@@ -38,7 +44,8 @@ export interface IUser extends registerUser {
     type: string;
     size : string[];
     color : string[];
-    
+    rating : number;
+    numReview : number;
   }
 
   export interface IProduct extends postIProduct{
@@ -46,6 +53,14 @@ export interface IUser extends registerUser {
     categories : string[];
     inStock : boolean;
     exists: boolean;
+  }
+  export interface IReview{
+    product : Types.ObjectId;
+    rating : number;
+    comment: string;
+    exists: boolean;
+    user: Types.ObjectId;
+    made: Date;
   }
 
   export enum Type {
