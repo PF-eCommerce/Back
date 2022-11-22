@@ -10,9 +10,9 @@ import {Request, Response} from 'express'
 let order: any
 
 export const postOrder = async (req: Request, res: Response) => {
-    
+    console.log('ENTRA A POSTORDER')
    try {
-    
+    console.log('ENTRA A POSTORDER')
     const data:Idata[] = req.body
     // console.log('PRODUCTARRAY', data[0])
     let productArray = data[0] as IorderItem[]

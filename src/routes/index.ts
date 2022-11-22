@@ -6,7 +6,7 @@ import auth0 from "./loginAuth0/loginAuth0.routes";
 import pasarelaRoutes from "./pasarela/pasarela.routes";
 import customerRoutes from "./customer/customer.routes";
 import plebRoutes from "./user/user.routes";
-import mercadoPagoRoutes from './mercadoPago/mercadoPago.routes';
+import mercadoPagoRoutes from "./mercadoPago/mercadoPago.routes"
 
 const router = Router();
 

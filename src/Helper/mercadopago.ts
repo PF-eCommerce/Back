@@ -24,7 +24,7 @@ export const mercadoPagoLink = async (products:Iitem[]) => {
             }),
     
 
-            // notification_url : 'https://cell-store-api.onrender.com/notification'
+            notification_url : 'https://back-production-2a09.up.railway.app/notification'
 
           };
           
