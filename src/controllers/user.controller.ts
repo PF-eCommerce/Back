@@ -1,10 +1,11 @@
 import User from '../model/User'
+import UserAuth0 from '../model/UserAuth0'
 import {Request, Response} from 'express'
 import Customer from '../model/Customer'
 
 export const getAllUser = async (_req: Request, res: Response) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await UserAuth0.find();
 
          res.status(200).json(allUsers)
        } catch (error) {
@@ -77,7 +78,7 @@ export const updateInfoAsAdmin = async (req : Request , res: Response) : Promise
 export const profile = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
   try {
   
-   const userData = await User.findById(req.app.locals.id)
+   const userData = await UserAuth0.findById(req.app.locals.id)
    
    
    if(userData == null) {
@@ -89,8 +90,8 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
      if(personData && userData){
        const fullUser = {
        _id: userData.id,
-       image: userData.image,
-       userName : userData.userName,
+       image: userData.picture,
+       userName : userData.nickname,
        name: personData.name + " " + personData.lastName,
        country: personData.country,
        city: personData.city,
@@ -102,8 +103,8 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
      if(!personData){
        const user = {
          _id: userData.id,
-         image: userData.image,
-         userName : userData.userName,
+         image: userData.picture,
+         userName : userData.nickname,
          email: userData.email,
        };
        return res.status(200).json(user)

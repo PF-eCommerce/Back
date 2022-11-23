@@ -79,5 +79,6 @@ export async function captureOrder(token: any) {
     return data;
   } catch (error) {
     console.log("/helper/paypal/captureOrder", error);
+    throw new Error('¡Ups!')
   }
 }
