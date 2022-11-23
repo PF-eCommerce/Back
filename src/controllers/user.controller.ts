@@ -157,3 +157,22 @@ export const perfil = async (req : Request, res: Response) : Promise< Response<a
    console.log(error)
   }
 }
+
+export const setAdmin = async (req: Request, res: Response):Promise<any> => {
+
+  const userData = await UserAuth0.findById(req.params.id);
+  if(userData === null){
+    res.status(400).json({msg:"No se encontro el usuario"});
+  }else{
+    console.log(userData.admin)
+    const isAdmin:boolean = userData.admin.includes("admin");
+    const update = await UserAuth0.updateOne({_id:userData._id},
+      {
+        $set:{
+          admin: isAdmin ? ["false"] : ["admin"]
+        }
+      }
+      )
+  res.json(update)
+  }
+}
