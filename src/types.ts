@@ -1,12 +1,18 @@
 import { Types } from 'mongoose'
 import { Request } from 'express'
 //interfaz para el req.body del controller de user
+
 export interface registerUser {
-    userName : string
-    email : string
-    password : string
+    userName : string;
+    email : string;
+    password : string;
 }
 
+export interface reviewUser {
+    userId : string
+    comment : string
+    rating : number
+}
 
 // type req.body auth login
 
@@ -38,7 +44,10 @@ export interface IUser extends registerUser {
     type: string;
     size : string[];
     color : string[];
-    
+    rating : number;
+    numReview : number;
+    comment: string;
+    reviews: Types.ObjectId;
   }
 
   export interface IProduct extends postIProduct{
@@ -46,6 +55,14 @@ export interface IUser extends registerUser {
     categories : string[];
     inStock : boolean;
     exists: boolean;
+  }
+  export interface IReview{
+    product : Types.ObjectId;
+    rating : number;
+    comment: string;
+    exists: boolean;
+    user: Types.ObjectId;
+    made: Date;
   }
 
   export enum Type {
@@ -109,6 +126,77 @@ export interface ICustomer {
   sizes: string[]
 }
 
+export interface IorderItem{
+  name: string
+  qty: number
+  image: string
+  price: number
+  product: Types.ObjectId
+  count: number
+  _id: Types.ObjectId
+  title: string
+  quantity: number
+  currency_id: string
+  unit_price: number
+}
+
+export interface Ipayment{
+  name: string
+  lastName: string
+  phone: number
+  address_user: string
+  info: string
+  email: string
+  surname: string
+}
+
+export interface Iorder{
+  user: Types.ObjectId
+  orderItems?: IorderItem
+  PaymentMethod: string
+  status: string
+  email_address: string
+  shippingPrice: number
+  totalPrice: number
+  isPaid: boolean
+  paidAt: Date
+  isDelivered: boolean
+  date: Date
+  address: string
+  userPaymentInfo?: Ipayment
+}
+
+export interface Icontroller{
+  name: string
+  count: number
+  price: number
+}
+
+export interface Ilocation{
+  street_name: string
+  street_number: number
+  zip_code: string
+}
+
+export interface Idata{
+  data?:IpasarelaCompras[]
+}
+
+export interface IpasarelaCompras{
+  productArray?:IorderItem[]
+  userId:string
+  location?:Ilocation
+  input?:Ipayment
+}
+
+export interface Iitem extends IorderItem{
+  title: string
+  quantity: number
+  currency_id: string
+  unit_price: number
+
+}
+
 export interface IAuth0User {
   email: string,
   email_verified : boolean,
@@ -119,6 +207,10 @@ export interface IAuth0User {
   updated_at : string
 }
 
+export interface Ipreference{
+  items:Iitem[]
+}
+
 export interface IAuth0Model extends IAuth0User {
-  admin : boolean
+  admin : string[]
 }
