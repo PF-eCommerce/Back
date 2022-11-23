@@ -3,9 +3,9 @@ import { Request } from 'express'
 //interfaz para el req.body del controller de user
 
 export interface registerUser {
-    userName : string
-    email : string
-    password : string
+    userName : string;
+    email : string;
+    password : string;
 }
 
 export interface reviewUser {
@@ -46,6 +46,8 @@ export interface IUser extends registerUser {
     color : string[];
     rating : number;
     numReview : number;
+    comment: string;
+    reviews: Types.ObjectId;
   }
 
   export interface IProduct extends postIProduct{
@@ -210,5 +212,5 @@ export interface Ipreference{
 }
 
 export interface IAuth0Model extends IAuth0User {
-  admin : boolean
+  admin : string[]
 }

@@ -26,11 +26,11 @@ const UserAuth0Schema = new mongoose.Schema<IAuth0Model>({
   updated_at: {
     type: String,
   },
-
+ 
   admin: {
-    type: Boolean,
+    type: [String],
     required: true,
-    default: false,
+    default : ['user']
   },
 });
 
