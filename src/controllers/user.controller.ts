@@ -78,7 +78,7 @@ export const updateInfoAsAdmin = async (req : Request , res: Response) : Promise
 export const profile = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
   try {
   
-   const userData = await User.findById(req.app.locals.id)
+   const userData = await UserAuth0.findById(req.app.locals.id)
    
    
    if(userData == null) {
@@ -90,8 +90,8 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
      if(personData && userData){
        const fullUser = {
        _id: userData.id,
-       image: userData.image,
-       userName : userData.userName,
+       image: userData.picture,
+       userName : userData.nickname,
        name: personData.name + " " + personData.lastName,
        country: personData.country,
        city: personData.city,
@@ -103,8 +103,8 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
      if(!personData){
        const user = {
          _id: userData.id,
-         image: userData.image,
-         userName : userData.userName,
+         image: userData.picture,
+         userName : userData.nickname,
          email: userData.email,
        };
        return res.status(200).json(user)
