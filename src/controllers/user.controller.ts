@@ -6,10 +6,10 @@ export const getAllUser = async (_req: Request, res: Response) => {
   try {
     const allUsers = await UserAuth0.find();
 
-         res.status(200).json(allUsers)
-       } catch (error) {
-         console.log(error)
-       }
+    res.status(200).json(allUsers)
+  } catch (error) {
+    console.log(error)
+  }
 }
 export const getUser = async (req: Request, res: Response) => {
   try {
@@ -36,9 +36,9 @@ export const getUser = async (req: Request, res: Response) => {
 //       console.log(error)
 //   }
 // }
-export const updateInfo = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> =>   {
+export const updateInfo = async (req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> => {
   const _id = req.params.id
-  const {admin, spent, confirmed, id} = req.body
+  const { admin, spent, confirmed, id } = req.body
   try {
     if(admin || spent || confirmed || id){
       return res.status(403).json({error:true, msg:"Ah, sos re trol.jpg"})
@@ -50,13 +50,13 @@ export const updateInfo = async (req : Request , res: Response) : Promise< Respo
        return res.status(400).json({error: true, msg: "No se encontró al cliente/usuario"})
     }
   } catch (error) {
-     console.log(error)
+    console.log(error)
   }
 }
 
-export const updateInfoAsAdmin = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> =>   {
+export const updateInfoAsAdmin = async (req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> => {
   const _id = req.params.id
-  const {id} = req.body
+  const { id } = req.body
   try {
     if(id){
       return res.status(403).json({error:true, msg:"Ah, sos re trol.jpg"})
@@ -68,13 +68,13 @@ export const updateInfoAsAdmin = async (req : Request , res: Response) : Promise
        return res.status(400).json({error: true, msg: "No se encontró al cliente/usuario"})
     }
   } catch (error) {
-     console.log(error)
+    console.log(error)
   }
 }
 
 
 
-export const profile = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
+export const profile = async (req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> => {
   try {
   
     const userData = await UserAuth0.findById(req.params.id)
@@ -112,10 +112,10 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
      }
    }
   } catch (error) {
-   console.log(error)
+    console.log(error)
   }
 }
-export const perfil = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
+export const perfil = async (req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> => {
   try {
   
    const userData = await UserAuth0.findById(req.params.id)
@@ -157,6 +157,29 @@ export const perfil = async (req : Request, res: Response) : Promise< Response<a
      }
    }
   } catch (error) {
-   console.log(error)
+    console.log(error)
+  }
+}
+
+export const setAdmin = async (req: Request, res: Response): Promise<any> => {
+
+  try {
+    const userData = await UserAuth0.findById(req.params.id);
+    if (!userData) {
+      res.status(400).json({ msg: "No se encontro el usuario" });
+    } else {
+      console.log(userData.admin)
+      const isAdmin: boolean = userData.admin.includes("admin");
+      const update = await UserAuth0.updateOne({ _id: userData._id },
+        {
+          $set: {
+            admin: isAdmin ? ["false"] : ["admin"]
+          }
+        }
+      )
+      res.json(update)
+    }
+  } catch (error) {
+    res.status(400).json({msg:error})
   }
 }
