@@ -1,6 +1,6 @@
 import { OrderModel as Order } from "../model/OrderModel";
 import { Request, Response } from "express";
-import { Iorder } from "../types";
+import { Iorder /*IOrderFInal*/ } from "../types";
 
 export const getAllOrders = async (_req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const getAllOrders = async (_req: Request, res: Response) => {
       const itemsQuantity = ordersProducts
         .map((p: any) => p.qty)
         .reduce((a, b) => a + b, 0);
-      const ordersFinal: any = {
+      const ordersFinal: any /*IOrderFInal*/ = {
         orders,
         spent: itemsPrices,
         quantityItems: itemsQuantity,
@@ -49,7 +49,7 @@ export const getUserOrders = async (req: Request, res: Response) => {
     const itemsQuantity = ordersProducts
       .map((p: any) => p.qty)
       .reduce((a, b) => a + b, 0);
-    const ordersFinal: any = orders
+    const ordersFinal: any /*IOrderFInal*/ = orders
       .map((o: any) => o)
       .concat({ spent: itemsPrices, quantityItems: itemsQuantity });
 
@@ -91,5 +91,22 @@ export const modifyOrder = async (req: Request, res: Response) => {
     }
   } catch (error) {
     return res.status(500).json(error);
+  }
+};
+const hasDuplicates = (array: Array<any>) => {
+  new Set(array).size < array.length;
+  return array;
+};
+
+export const productsPurchased = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const orders = await Order.find({ user: userId });
+  if (orders) {
+    const ordersProducts = orders.map((el) => el.orderItems).flat();
+
+    const ordersFinal = hasDuplicates(ordersProducts);
+    return res.status(200).json(ordersFinal);
+  } else {
+    return res.status(404).send(`Aún no hay reviews`);
   }
 };
