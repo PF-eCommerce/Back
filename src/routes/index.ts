@@ -1,5 +1,5 @@
 import { Router } from "express";
-import loginRoutes from "./login/login.routes";
+// import loginRoutes from "./login/login.routes";
 import userRoutes from "./userAdmin/userAdmin.routes";
 import productsRoutes from "./product/product.routes";
 import auth0 from "./loginAuth0/loginAuth0.routes";
@@ -12,7 +12,7 @@ import mercadoPagoRoutes from './mercadoPago/mercadoPago.routes';
 
 const router = Router();
 
-router.use(loginRoutes);
+// router.use(loginRoutes);
 router.use(userRoutes);
 router.use(productsRoutes);
 router.use(pasarelaRoutes);
