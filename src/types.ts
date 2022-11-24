@@ -117,6 +117,7 @@ export interface ICustomer {
   userId: Types.ObjectId,
   name: string,
   lastName: string,
+  phone: string,
   email: string,
   country: string, 
   city: string,
@@ -196,6 +197,7 @@ export interface Iitem extends IorderItem{
 }
 
 export interface IAuth0User {
+  _id: Types.ObjectId,
   email: string,
   email_verified : boolean,
   name: string,
