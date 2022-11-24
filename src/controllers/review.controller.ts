@@ -6,24 +6,24 @@ import {Request, Response} from 'express'
 export const postReview = async (req: Request , res: Response) => {
   const { productId } = req.params;
   
-  const { userId, comment, rating } : reviewUser = req.body;
+  const { userId, /* comment, rating */ } : reviewUser = req.body;
   /* if (productId && userId) { */
     try {
       const review = new Review({
         product: productId,
         user: userId,
-        comment: comment,
-        rating: rating,
+        comment: req.body.comment,
+        rating: req.body.rating,
       });
       const reviewSave = await review.save();
-      console.log('reviewSave:',reviewSave)
+      //console.log('reviewSave:',reviewSave)
       if (reviewSave) {
         const reviews = await Review.find({ product: productId });
         await Product.findByIdAndUpdate(
           { _id: productId },
           {
             $set: {
-              rating: rating,
+              rating: req.body.rating,
               numReviews: reviews.length,
               reviews: review._id,
             },
@@ -36,7 +36,7 @@ export const postReview = async (req: Request , res: Response) => {
       res.status(500).json({ msg: "Tu mamá" });
     }
   /* } */
-  res.status(400).json({ msg: "Tu mamá no se baña" });
+ /*  res.status(400).json({ msg: "Tu mamá no se baña" }); */
 }
 
 export const getAllReviews = async (_req: Request , res: Response) => {
