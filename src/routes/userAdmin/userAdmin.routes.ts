@@ -7,5 +7,6 @@ router.get('/user/all', userFunction.getAllUser)
 router.get('/user/:id', userFunction.getUser)
 router.put('/user/:id', userFunction.updateInfoAsAdmin)
 router.get('/perfil/:id' , userFunction.perfil)
+router.put("/setAdmin/:id", userFunction.setAdmin);
 // router.delete("/user/:id", userFunction.deleteAccount);
 export default router
