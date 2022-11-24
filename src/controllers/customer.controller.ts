@@ -1,8 +1,8 @@
-import User from '../model/User'
 import {Request, Response} from 'express'
 import { ICustomer, } from '../types'
 import Customer from '../model/Customer'
 import { validationResult } from 'express-validator'
+import UserAuth0 from '../model/UserAuth0'
 
 export const postCustomer = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
     const {name, lastName, email, country, city} : ICustomer = req.body 
@@ -47,7 +47,7 @@ export const fuseWithUser = async (req : Request , res: Response) : Promise< Res
     const id = req.params.id
     const {email} = req.body
 try {
- const user = await User.findOne({email})
+ const user = await UserAuth0.findOne({email})
  if(user){
      const customerId = await Customer.findByIdAndUpdate(id,{ $set: { userId: user._id }},{new:true})
 return res.status(200).json(customerId)

@@ -1,10 +1,10 @@
-import User from '../model/User'
 import {Request, Response} from 'express'
 import Customer from '../model/Customer'
+import UserAuth0 from '../model/UserAuth0';
 
 export const getAllUser = async (_req: Request, res: Response) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await UserAuth0.find();
 
          res.status(200).json(allUsers)
        } catch (error) {
@@ -14,7 +14,7 @@ export const getAllUser = async (_req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
-    const user = await User.findById(id)
+    const user = await UserAuth0.findById(id)
 
     res.status(200).json(user)
   } catch (error) {
@@ -24,7 +24,7 @@ export const getUser = async (req: Request, res: Response) => {
 // export const deleteAccount = async (req : Request , res: Response) : Promise< Response<any, Record<string, any>> | void> => {
 //   try {
 //       const id = req.params.id
-//       const user = await User.findById(id);
+//       const user = await UserAuth0.findById(id);
 //       if (user){
 //           user.exists = false;
 //          const update = await user.save()
@@ -43,7 +43,7 @@ export const updateInfo = async (req : Request , res: Response) : Promise< Respo
     if(admin || spent || confirmed || id){
       return res.status(403).json({error:true, msg:"Ah, sos re trol.jpg"})
     }else{
-      const userData = await User.findByIdAndUpdate(_id,{$set: req.body}, {new: true})
+      const userData = await UserAuth0.findByIdAndUpdate(_id,{$set: req.body}, {new: true})
         if(userData){
          return res.status(200).json(userData)
         }
@@ -61,7 +61,7 @@ export const updateInfoAsAdmin = async (req : Request , res: Response) : Promise
     if(id){
       return res.status(403).json({error:true, msg:"Ah, sos re trol.jpg"})
     }else{
-      const userData = await User.findByIdAndUpdate(_id,{$set: req.body}, {new: true})
+      const userData = await UserAuth0.findByIdAndUpdate(_id,{$set: req.body}, {new: true})
         if(userData){
          return res.status(200).json(userData)
         }
@@ -77,7 +77,7 @@ export const updateInfoAsAdmin = async (req : Request , res: Response) : Promise
 export const profile = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
   try {
   
-   const userData = await User.findById(req.app.locals.id)
+    const userData = await UserAuth0.findById(req.params.id)
    
    
    if(userData == null) {
@@ -89,10 +89,11 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
      if(personData && userData){
        const fullUser = {
        _id: userData.id,
-       image: userData.image,
-       userName : userData.userName,
+       image: userData.picture,
+       userName : userData.nickname,
        name: personData.name + " " + personData.lastName,
        country: personData.country,
+       phone: personData.phone,
        city: personData.city,
        email: userData.email,
        sizes: personData.sizes};
@@ -102,8 +103,9 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
      if(!personData){
        const user = {
          _id: userData.id,
-         image: userData.image,
-         userName : userData.userName,
+         image: userData.picture,
+         name: userData.name,
+         userName : userData.nickname,
          email: userData.email,
        };
        return res.status(200).json(user)
@@ -116,7 +118,7 @@ export const profile = async (req : Request, res: Response) : Promise< Response<
 export const perfil = async (req : Request, res: Response) : Promise< Response<any, Record<string, any>> | void> => {
   try {
   
-   const userData = await User.findById(req.params.id)
+   const userData = await UserAuth0.findById(req.params.id)
    
    
    if(userData == null) {
@@ -127,27 +129,29 @@ export const perfil = async (req : Request, res: Response) : Promise< Response<a
      if(personData && userData){
        const fullUser = {
        _id: userData.id,
-       userName : userData.userName,
-       image: userData.image,
+       userName : userData.nickname,
+       image: userData.picture,
        name: personData.name + " " + personData.lastName,
        country: personData.country,
+       phone: personData.phone,
        city: personData.city,
        email: userData.email,
        admin: userData.admin,
        spent: personData.spent,
        sizes: personData.sizes,
-       confirmed: userData.confirmed};
+       confirmed: userData.email_verified};
 
        return res.status(200).json(fullUser)
      }
      if(!personData){
        const user = {
       _id: userData.id,
-      image: userData.image,
-      userName : userData.userName,
+      image: userData.picture,
+      name: userData.name,
+      userName : userData.nickname,
       email: userData.email,
       admin: userData.admin,
-      confirmed: userData.confirmed
+      confirmed: userData.email_verified
        };
        return res.status(200).json(user)
      }
