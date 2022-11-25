@@ -1,5 +1,5 @@
 import Product from "../model/Product";
-import { postIProduct } from "../types";
+import { postIProduct, IProduct } from "../types";
 import { Request, Response } from "express";
 
 export const postProduct = async (req: Request, res: Response) => {
@@ -156,3 +156,25 @@ export const updateProduct = async (
     console.log(error);
   }
 };
+
+
+export const getAllProducts = async (_req : Request , res : Response) => {
+      try {
+         const products : IProduct[] = await Product.find()
+         if(!products) res.status(400).json({error : true , msg : 'no existe ningun producto'})
+
+         const product = products.map(el => {
+          return {
+            id : el._id,
+            title : el.title,
+            price : el.price,
+            img : el.img[0],
+            inStock : el.inStock
+          }
+         })
+        res.status(200).json(product)
+ 
+      } catch (error) {
+        console.log(error)
+      }
+}
