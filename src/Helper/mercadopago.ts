@@ -6,8 +6,10 @@ import { CreatePreferencePayload } from 'mercadopago/models/preferences/create-p
 // const mercadoPago = require('mercadopago');
 
 export const mercadoPagoLink = async (products:Iitem[]) => {
+    
     //INTERFAZ CON LOS TIPADOS DEL ARRAY y devuelve un string
     try {
+        
         mercadopago.configure({
             access_token : `${process.env.ACCESS_TOKEN}` // con el template se le indica que se un string o una variable
         })
@@ -23,13 +25,14 @@ export const mercadoPagoLink = async (products:Iitem[]) => {
                 }
             }),
     
-
+            // notification_url :'http://localhost:3001/notification'
             notification_url : 'https://back-production-2a09.up.railway.app/notification'
+            // notification_url : 'https://a798-2800-810-513-807a-c1ea-d51f-80ee-1f5c.sa.ngrok.io/notification'
 
           };
           
          const response = await mercadopago.preferences.create(preference as CreatePreferencePayload)
-
+         console.log('MERCADOPAGLINK3', response)
          return response.body.init_point
     } catch (error) {
         console.log(error)
