@@ -46,6 +46,7 @@ export interface postIProduct {
   numReview: number;
   comment: string;
   reviews: Types.ObjectId;
+  genero: String;
 }
 
 export interface IProduct extends postIProduct {
@@ -130,6 +131,7 @@ export interface IorderItem {
   quantity: number;
   currency_id: string;
   unit_price: number;
+ 
 }
 
 export interface Ipayment {

@@ -7,6 +7,7 @@ import paginate from 'mongoose-paginate-v2'
 const ProductSchema = new mongoose.Schema<IProduct>(
   {
     title: { type: String, required: true, unique: true },
+    genero: {type: String, required: true },
     desc: { type: String, required: true },
     img: { type: [String], required: true },
     price: { type: Number, required: true },
