@@ -42,8 +42,8 @@ export const createSessionStripe = async (req: Request, res: Response) => {
     const session = await stripe.checkout.sessions.create({
       line_items: dataOutput,
       mode: 'payment',
-      success_url: `${process.env["HOST"]}/capture-order-stripe`,
-      cancel_url: `http://localhost:3001/home?canceled=true`,
+      success_url: `http://localhost:3001/capture-order-stripe`,
+      cancel_url: `http://localhost:3000/home?canceled=true`,
     });
     res.json(session.url);
   } catch (error: any) {
@@ -53,7 +53,7 @@ export const createSessionStripe = async (req: Request, res: Response) => {
 }
 
 export const captureOrderStripe = async (_req: Request, res: Response) => {
-  res.redirect("http://localhost:3000/wenas")
+  res.redirect("http://localhost:3000/home")
 }
 
 
