@@ -13,7 +13,7 @@ export const getAllOrders = async (_req: Request, res: Response) => {
       const itemsQuantity = ordersProducts
         .map((p: any) => p.qty)
         .reduce((a, b) => a + b, 0);
-      const ordersFinal: any /*IOrderFInal*/ = {
+      const ordersFinal /*IOrderFInal*/ = {
         orders,
         spent: itemsPrices,
         quantityItems: itemsQuantity,
