@@ -63,7 +63,7 @@ export const getUserOrders = async (req: Request, res: Response) => {
 
 export const getOrdersProduct = async (req: Request, res: Response) => {
   const { productId } = req.params;
-  const orders = await Order.find({ product: productId });
+  const orders = await Order.find({ orderItems: { product: productId } });
   if (orders) {
     return res.status(200).json(orders);
   } else {
