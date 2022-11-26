@@ -34,6 +34,7 @@ export interface IUser extends registerUser {
 }
 
 export interface postIProduct {
+  _id: Types.ObjectId;
   title: string;
   desc: string;
   img: string[];
