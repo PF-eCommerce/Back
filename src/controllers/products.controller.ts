@@ -3,7 +3,7 @@ import { postIProduct } from "../types";
 import { Request, Response } from "express";
 
 export const postProduct = async (req: Request, res: Response) => {
-  const { title, desc, img, price, numStock, type, size, color }: postIProduct =
+  const { title,genero, desc, img, price, numStock, type, size, color }: postIProduct =
     req.body;
 
   try {
@@ -15,6 +15,7 @@ export const postProduct = async (req: Request, res: Response) => {
 
     const product = new Product({
       title,
+      genero,
       desc,
       img,
       price,
