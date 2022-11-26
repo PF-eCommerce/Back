@@ -1,8 +1,8 @@
-interface Product {
-    name: string;
-    price: number;
-    units: number;
-}
+// interface Product {
+//     name: string;
+//     price: number;
+//     units: number;
+// }
 interface Output {
     price_data: {
         currency: string,
@@ -14,21 +14,56 @@ interface Output {
     quantity: number,
 }
 
-export async function stripeFormat(data: Product[]): Promise<Output[] | string>  {
+export function orderFormat(data: any) {
     try {
-        if(data === null){
-            return("Nada por aca bro")
+        console.log(data.data)
+        const order = {
+            user: data.data.user.id,
+            orderItems: data.data.data.map((p: any) => {
+                return {
+                    name: p.title,
+                    qty: p.qty,
+                    image: p.img[0],
+                    price: p.price,
+                    product: p._id
+                }
+            }),
+            address: {
+                street_name: data.data.user.street_name,
+                street_number: data.data.user.street_number,
+                zip_code: data.data.user.zip_code
+            },
+            userPaymentInfo: {
+                name: data.data.user.name,
+                lastname: data.data.user.surname,
+                phone: data.data.user.phone
+            },
+            PaymentMethod: data.data.PaymentMethod
+    
         }
-        const newData = data.map((p) => {
-            return({
+        console.log(order)
+        return order;
+    } catch (error) {
+        console.log("helper/productFormat/orderFormat", error);
+        return{}
+    }
+}
+
+export async function stripeFormat(data: any): Promise<Output[] | string> {
+    try {
+        if (data.data === null) {
+            return ("Nada por aca bro")
+        }
+        const newData = data.map((p:any) => {
+            return ({
                 price_data: {
                     currency: "ars",
-                    unit_amount: p.price*100,//el precio esta en centavos 50000 === 500,00 ARS
+                    unit_amount: p.price * 100,//el precio esta en centavos 50000 === 500,00 ARS
                     product_data: {
-                        name: p.name
+                        name: p.title
                     },
                 },
-                quantity: p.units,
+                quantity: p.qty,
             })
         })
 

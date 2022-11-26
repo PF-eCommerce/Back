@@ -2,9 +2,9 @@ const fetch = require("node-fetch");
 const base = "https://api-m.sandbox.paypal.com";
 //"https://api-m.paypal.com"
 
-export async function createOrder() {
+export async function createOrder(precio:number) {
   try {
-    const purchaseAmount = "159.35"; // TODO: pull prices from a database
+    // const purchaseAmount = "159.35"; // TODO: pull prices from a database
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
     const response = await fetch(url, {
@@ -18,14 +18,14 @@ export async function createOrder() {
         purchase_units: [
           {
             amount: {
-              currency_code: "USD",
-              value: purchaseAmount,
+              currency_code: "ARS",
+              value: precio,
             },
-            description: "Objeto setsual sabroso"
+            description: "Resumen de compra en TRES BIEN"
           },
         ],
         application_context: {
-          brand_name: "mytienda.com",
+          brand_name: "TRES BIEN",
           landing_page: "LOGIN",
           user_action: "PAY_NOW",
           return_url: `${process.env["HOST"]}/capture-order-paypal`,
