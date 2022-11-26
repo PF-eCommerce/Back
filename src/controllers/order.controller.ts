@@ -29,13 +29,17 @@ export const getAllOrders = async (_req: Request, res: Response) => {
   }
 };
 
-export const getOrder = async (req: Request, res: Response) => {
-  const { orderId } = req.params;
-  const order = await Order.findById(orderId);
-  if (order) {
-    return res.status(200).json(order);
-  } else {
-    return res.status(404).send(`Orden no existente`);
+export const getOrder = async (req: Request, res: Response):Promise<any> => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId);
+    if (order) {
+      return res.status(200).json(order);
+    } else {
+      return res.status(404).send(`Orden no existente`);
+    }
+  } catch (error) {
+    res.status(400).json({msg:"nada pa", error: error})
   }
 };
 export const getUserOrders = async (req: Request, res: Response) => {
