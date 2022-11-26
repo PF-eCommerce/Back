@@ -69,7 +69,7 @@ export const postOrder = async (req: Request, res: Response) => {
     //  emailPayment(link, data[1], data[2].email)
      
     //  res.send(link)
-    // res.status(404)
+   // res.status(404)
    } catch (error) {
     console.log('ERROR',error)
    }
