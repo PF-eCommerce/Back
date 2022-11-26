@@ -23,8 +23,9 @@ export const mercadoPagoLink = async (products:Iitem[]) => {
                 }
             }),
     
-            
+
              notification_url : 'https://back-production-2a09.up.railway.app/notification'
+
 
           };
           

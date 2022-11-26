@@ -1,7 +1,7 @@
-import { Router } from "express";
-import * as mercadopago from "../../controllers/mercadopago.controller";
+import express from 'express'
+import * as mercadopago from "../../controllers/mercadopago.controller"
 
-const router = Router()
+const router = express.Router()
 
 router.post('/post-order/:id', mercadopago.postOrder)
 router.post('/notification', mercadopago.notification)
