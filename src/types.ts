@@ -53,6 +53,7 @@ export interface IProduct extends postIProduct {
   categories: string[];
   inStock: boolean;
   exists: boolean;
+  date: Date;
 }
 export interface IReview {
   product: Types.ObjectId;
