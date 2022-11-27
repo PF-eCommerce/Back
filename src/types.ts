@@ -54,6 +54,7 @@ export interface IProduct extends postIProduct {
   categories: string[];
   inStock: boolean;
   exists: boolean;
+  date: Date;
 }
 export interface IReview {
   product: Types.ObjectId;
@@ -149,6 +150,7 @@ export interface Iorder {
   user: Types.ObjectId;
   orderItems?: IorderItem;
   PaymentMethod: string;
+  exist: boolean;
   status: string;
   email_address: string;
   shippingPrice: number;
