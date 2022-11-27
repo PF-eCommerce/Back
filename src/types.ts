@@ -148,6 +148,7 @@ export interface Iorder {
   user: Types.ObjectId;
   orderItems?: IorderItem;
   PaymentMethod: string;
+  exist: boolean;
   status: string;
   email_address: string;
   shippingPrice: number;
