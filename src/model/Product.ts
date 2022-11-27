@@ -23,7 +23,8 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     numReview : { type: Number, default: 0},
     comment :  { type: String, required: false},
     reviews : { type: mongoose.Schema.Types.ObjectId,
-    ref: "Review" }
+    ref: "Review" },
+    date: {type: Date, default: new Date()}
   }
 );
 

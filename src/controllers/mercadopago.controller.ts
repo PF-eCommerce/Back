@@ -10,18 +10,18 @@ import {Request, Response} from 'express'
 let order: any
 
 export const postOrder = async (req: Request, res: Response) => {
-    console.log('ENTRA A POSTORDER')
+    
    try {
-    console.log('ENTRA A POSTORDER')
+    
     const data:Idata[] = req.body
-    // console.log('PRODUCTARRAY', data[0])
+    
     let productArray = data[0] as IorderItem[]
-    // console.log('LOCATION', data[1])
+   
     let location = data[1] as Ilocation
-    // console.log('INPUT', data[2])
+    
     let input = data[2] as Ipayment
      const id = req.params.id
-    //  console.log(id)
+    
      console.log('ENTRA A POSTORDER', productArray)
      if(productArray) {
         
@@ -51,9 +51,9 @@ export const postOrder = async (req: Request, res: Response) => {
          
         
         })
-        console.log('ENTRA A POSTORDER')
+       
         await order.save();
-        console.log('ENTRA A POSTORDERRRR')
+        
         const link:string = await mercadoPagoLink(productArray)
            
         //  emailPayment(link, userId, input?.email)
@@ -78,11 +78,11 @@ export const postOrder = async (req: Request, res: Response) => {
 
 export const notification = async (req: Request, res: Response) => {
     const datos = req.query
-
+    console.log('ASDASDASD')
  
 
     const idStatus = datos["data.id"]
-    // console.log(idStatus)
+    console.log(idStatus)
     try {
         const dataCompra = await axios(`https://api.mercadopago.com/v1/payments/${idStatus}` , {
             headers: { 'Authorization' : 'Bearer '+process.env.ACCESS_TOKEN }
