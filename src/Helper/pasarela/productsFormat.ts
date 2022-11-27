@@ -16,7 +16,7 @@ interface Output {
 
 export function orderFormat(data: any) {
     try {
-        console.log(data.data)
+        // console.log(data.data)
         const order = {
             user: data.data.user.id,
             orderItems: data.data.data.map((p: any) => {
@@ -41,7 +41,7 @@ export function orderFormat(data: any) {
             PaymentMethod: data.data.PaymentMethod
     
         }
-        console.log(order)
+        // console.log(order)
         return order;
     } catch (error) {
         console.log("helper/productFormat/orderFormat", error);

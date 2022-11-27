@@ -9,27 +9,33 @@ const stripe = require('stripe')('sk_test_51M58hjKKgTZYfNTV2iUQp6AW7lTzYX9XDcelX
 export const createOrderPaypal = async (req: Request, res: Response) => {
 
   try {
-    const totalPrice = req.body.data.reduce((sum:number, p:any) => {
-      return sum + (p.price*p.units)
+    // console.log("products", req.body.data.data);
+    const totalPrice = req.body.data.data.reduce((sum: any, p: any) => {
+      // console.log(sum, p.price, p.qty);
+      return sum + p.price * p.qty;
     }, 0)
-    const response = await helper.createOrder(totalPrice)
+    //TODO: Arreglar esta porqueria
     const order = new OrderModel(productFormat.orderFormat(req.body));
+    // console.log(order)
+    const id = order._id.valueOf()
+    const response = await helper.createOrder(totalPrice, id)
     await order.save();
+    // console.log(response)
     res.json(response.links[1].href);
 
   } catch (error) {
-    res.json(error);
+    console.log("controllers/pasarela/createOrderPaypal", error)
+    res.status(400).json(error);
   }
 
 }
 
 export const captureOrderPaypal = async (req: Request, res: Response) => {
-
+  const { token, id } = req.query;
   try {
-    const { token } = req.query;
-    const id = req.params.id
 
     const data = await helper.captureOrder(token);
+    if(data === "orderFailed")  res.redirect(`${process.env["HOST"]}/cancel-order-paypal?id=${id}`)
 
     if (data.status === 'COMPLETED') {
       await OrderModel.updateOne({ _id: id },
@@ -39,41 +45,41 @@ export const captureOrderPaypal = async (req: Request, res: Response) => {
           }
         }
       )
-
-      res.redirect("http://localhost:3000/success")
+      res.redirect(`${process.env["FRONT"]}/success`)
     }//TODO: Insertar redireccion
 
   } catch (error) {
     console.log("/controller/pasarela/captureOrder", error);
-    res.redirect("http://localhost:3000/failed")
   }
 }
 
 export const cancelOrderPaypal = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
-    await OrderModel.updateOne({ _id: id },
+    const {id, canceled} = req.query;
+    const awa = await OrderModel.updateOne({ _id: id },
       {
         exist: false,
       })
-    res.redirect("http://localhost:3000/failed")//TODO: insertar redireccion
+    console.log(awa)
+    if(canceled === "true") res.redirect(`${process.env["FRONT"]}/cart`)//TODO: insertar redireccion
+    else res.redirect(`${process.env["FRONT"]}/failed`)
   } catch (error) {
-    console.log("/controller/pasarela/captureOrder")
+    console.log("/controller/pasarela/cancelOrder", error)
   }
 }
 
 export const createSessionStripe = async (req: Request, res: Response) => {
   try {
     const data = req.body.data;
-    const dataOutput:any = await productFormat.stripeFormat(data.data);
+    const dataOutput: any = await productFormat.stripeFormat(data.data);
 
     const order = new OrderModel(productFormat.orderFormat(req.body));
 
     const session = await stripe.checkout.sessions.create({
       line_items: dataOutput,
       mode: 'payment',
-      success_url: `http://localhost:3001/capture-order-stripe/${order._id.valueOf()}`,
-      cancel_url: `http://localhost:3001/cancel-order-stripe/${order._id.valueOf()}`,
+      success_url: `${process.env["HOST"]}/capture-order-stripe/${order._id.valueOf()}`,
+      cancel_url: `${process.env["HOST"]}/cancel-order-stripe/${order._id.valueOf()}`,
     });
 
     await order.save();
@@ -92,7 +98,7 @@ export const cancelOrderStripe = async (req: Request, res: Response) => {
       {
         exist: false,
       })
-    res.redirect("http://localhost:3000/cart")
+    res.redirect(`${process.env["FRONT"]}/cart`)
   } catch (error) {
     console.log("controllers/pasarela/cancelSessionStripe", error)
   }
@@ -107,9 +113,9 @@ export const captureOrderStripe = async (req: Request, res: Response) => {
           status: "Success",
         }
       })
-    res.redirect("http://localhost:3000/home")
+    res.redirect(`${process.env["FRONT"]}/success`)
   } catch (error) {
-    res.redirect("http://localhost:3000/failed")
+    res.redirect(`${process.env["FRONT"]}/failed`)
   }
 }
 
