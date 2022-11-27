@@ -6,9 +6,9 @@ const router = express.Router();
 //Todas las órdenes
 router.get("/orders", orderFunction.getAllOrders);
 //Todas las órdenes de un usuario
-router.get("/:userId/orders", orderFunction.getUserOrders);
+router.get("/user/:userId/orders", orderFunction.getUserOrders);
 //Productos de un usuario
-router.get("/:userId/orders/purchased", orderFunction.productsPurchased);
+router.get("/user/:userId/orders/purchased", orderFunction.productsPurchased);
 //Todas las órdenes de un producto
 router.get("/:productId/orders", orderFunction.getOrdersProduct);
 //Traer una orden en particular
