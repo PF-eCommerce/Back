@@ -41,12 +41,30 @@ export interface postIProduct {
   price: number;
   numStock: number;
   type: string;
-  size: string[];
+  isShoes: boolean;
+  size: {
+    extraSmall : number;
+    small : number;
+    medium : number;
+    large : number;
+    extraLarge : number;
+    num36 : number;
+    num37 : number;
+    num38 : number;
+    num39 : number;
+    num40 : number;
+    num41 : number;
+    num42 : number;
+    num43 : number; 
+  }
   color: string[];
   rating: number;
+  men : Boolean;
+  woman : Boolean;
   numReview: number;
   comment: string;
   reviews: Types.ObjectId;
+  dateIn : Date;
 }
 
 export interface IProduct extends postIProduct {
@@ -132,6 +150,7 @@ export interface IorderItem {
   quantity: number;
   currency_id: string;
   unit_price: number;
+ 
 }
 
 export interface Ipayment {
