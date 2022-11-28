@@ -3,8 +3,7 @@ import { postIProduct, IProduct  } from "../types";
 import { Request, Response } from "express";
 
 export const postProduct = async (req: Request, res: Response) => {
-  const { title, desc, img, price, type, size, color , men , woman , isShoes }: postIProduct =
-    req.body;
+  const { title, desc, img, price, type, size, color , men , woman , isShoes }: postIProduct = req.body;
 
   
   try {
@@ -34,6 +33,8 @@ export const postProduct = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+
 
 export const getBySearch = async (
   req: Request,
