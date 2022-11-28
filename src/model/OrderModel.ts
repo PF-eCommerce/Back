@@ -29,7 +29,10 @@ const orderSchema = new mongoose.Schema<Iorder>({
         type: String,
         default: 'MercadoPago'
     },
-
+    exist: {
+        type:Boolean,
+        default: true
+    },
     status : {
         type:String,
         default : 'Pending'

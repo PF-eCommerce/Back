@@ -2,9 +2,9 @@ const fetch = require("node-fetch");
 const base = "https://api-m.sandbox.paypal.com";
 //"https://api-m.paypal.com"
 
-export async function createOrder() {
+export async function createOrder(precio: any, id: any) {
   try {
-    const purchaseAmount = "159.35"; // TODO: pull prices from a database
+    // const purchaseAmount = "159.35"; 
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
     const response = await fetch(url, {
@@ -19,25 +19,25 @@ export async function createOrder() {
           {
             amount: {
               currency_code: "USD",
-              value: purchaseAmount,
+              value: (precio/165).toFixed(2),//TODO: dividir por el precio del dolar
             },
-            description: "Objeto setsual sabroso"
+            description: "Resumen de compra en TRES BIEN"
           },
         ],
         application_context: {
-          brand_name: "mytienda.com",
+          brand_name: "TRES BIEN",
           landing_page: "LOGIN",
           user_action: "PAY_NOW",
-          return_url: `${process.env["HOST"]}/capture-order-paypal`,
-          cancel_url: `${process.env["HOST"]}/cancel-order-paypal`
+          return_url: `${process.env["HOST"]}/capture-order-paypal?id=${id}`,
+          cancel_url: `${process.env["HOST"]}/cancel-order-paypal?id=${id}&canceled=true`
         }
       }),
     });
     // console.log("createOrder",response)
-
     const data = await handleResponse(response);
+
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.log("/helper/paypal/create", error)
   }
 }
@@ -79,6 +79,6 @@ export async function captureOrder(token: any) {
     return data;
   } catch (error) {
     console.log("/helper/paypal/captureOrder", error);
-    throw new Error('¡Ups!')
+    return "orderFailed";
   }
 }
