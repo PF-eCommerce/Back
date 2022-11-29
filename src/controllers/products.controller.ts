@@ -1,11 +1,11 @@
 import Product from "../model/Product";
-import { postIProduct, IProduct } from "../types";
+import { postIProduct, IProduct  } from "../types";
 import { Request, Response } from "express";
 
 export const postProduct = async (req: Request, res: Response) => {
-  const { title, desc, img, price, numStock, type, size, color }: postIProduct =
-    req.body;
+  const { title, desc, img, price, type, size, color , men , woman , isShoes }: postIProduct = req.body;
 
+  
   try {
     const existsProduct = await Product.findOne({ title });
     if (existsProduct) {
@@ -18,10 +18,12 @@ export const postProduct = async (req: Request, res: Response) => {
       desc,
       img,
       price,
-      numStock,
-      type,
       size,
+      type,
       color,
+      men, 
+      woman,
+      isShoes
     });
 
     await product.save();
@@ -31,6 +33,8 @@ export const postProduct = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+
 
 export const getBySearch = async (
   req: Request,
