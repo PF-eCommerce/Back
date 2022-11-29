@@ -43,7 +43,7 @@ export const getBySearch = async (
     };
 
     const search = req.query.search as string;
-    const searchCase = search[0].toUpperCase() + search.substring(1);
+    const searchCase = search.length > 0 && search[0].toUpperCase() + search.substring(1);
 
     let allProducts = await Product.paginate(
       {
