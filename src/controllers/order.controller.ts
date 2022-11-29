@@ -29,7 +29,7 @@ export const getAllOrders = async (_req: Request, res: Response) => {
   }
 };
 
-export const getOrder = async (req: Request, res: Response):Promise<any> => {
+export const getOrder = async (req: Request, res: Response): Promise<any> => {
   try {
     const { orderId } = req.params;
     const order = await Order.findById(orderId);
@@ -39,7 +39,7 @@ export const getOrder = async (req: Request, res: Response):Promise<any> => {
       return res.status(404).send(`Orden no existente`);
     }
   } catch (error) {
-    res.status(400).json({msg:"nada pa", error: error})
+    res.status(400).json({ msg: "nada pa", error: error });
   }
 };
 export const getUserOrders = async (req: Request, res: Response) => {
@@ -53,9 +53,11 @@ export const getUserOrders = async (req: Request, res: Response) => {
     const itemsQuantity = ordersProducts
       .map((p: any) => p.qty)
       .reduce((a, b) => a + b, 0);
-    const ordersFinal: any /*IOrderFInal*/ = orders
-      .map((o: any) => o)
-      .concat({ spent: itemsPrices, quantityItems: itemsQuantity });
+    const ordersFinal = {
+      orders,
+      spent: itemsPrices,
+      quantityItems: itemsQuantity,
+    };
 
     return res.status(200).json(ordersFinal);
   } else {
