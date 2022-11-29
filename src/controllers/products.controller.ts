@@ -5,7 +5,36 @@ import { Request, Response } from "express";
 export const postProduct = async (req: Request, res: Response) => {
   const { title, desc, img, price, type, size, color , men , woman , isShoes }: postIProduct = req.body;
 
+  let numStock : number = 0;
   
+ 
+
+  // let property : string[]  =
+  // [
+  //   'extraSmall' , 'small' , 'medium' , 'large' , 'extraLarge', 'num36' , 'num37' , 'num38', 'num39', 'num40', 'num41', 'num42', 'num43'] 
+ 
+  //   let onlyString : string = ''
+    
+
+  //   for (let i = 0; i < property.length; i++) {
+  //   if (property[i]) {
+  //     let onlyString : string = `'${property[i]}'`;
+  //     numStock += size[onlyString]
+  // }
+//}
+  
+  // if (size){
+  //   for ( property in size) {
+  //     if (property){
+  //       numStock = numStock += size[property];
+  //     }
+  //   }
+  //}
+
+  if (size){
+    numStock =+ size.extraSmall + size.small + size.medium + size.large + size.extraLarge +
+    size.num36 + size.num37 + size.num38 + size.num39 + size.num40 + size.num41 + size.num42 + size.num43
+  }
   try {
     const existsProduct = await Product.findOne({ title });
     if (existsProduct) {
@@ -23,7 +52,8 @@ export const postProduct = async (req: Request, res: Response) => {
       color,
       men, 
       woman,
-      isShoes
+      isShoes,
+      numStock
     });
 
     await product.save();
