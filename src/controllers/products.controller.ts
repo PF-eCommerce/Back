@@ -75,8 +75,9 @@ export const getBySearch = async (
       limit: 10,
       page: parseInt(req.query.page as string),
     };
-
+  
     const search = req.query.search as string;
+    
     const searchCase = search[0].toUpperCase() + search.substring(1);
 
     let allProducts = await Product.paginate(
@@ -95,6 +96,40 @@ export const getBySearch = async (
     console.log(error);
   }
 };
+export const getProductByGenre = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>> | void> => {
+  try {
+    const options = {
+      limit: 10,
+      page: parseInt(req.query.page as string),
+    };
+
+    const men = req.body.hombre as Boolean;
+    const woman = req.body.mujer as Boolean;
+
+    if (men){
+      const allProducts = await Product.paginate(
+        { men },
+        options
+      );
+      return res.status(200).json(allProducts);
+    }
+    if (woman){
+      const allProducts = await Product.paginate(
+        { woman },
+        options
+      );
+      return res.status(200).json(allProducts);
+    }
+    
+}catch(error){
+  console.log(error);
+}
+}
+
+
 
 export const getProduct = async (
   req: Request,
