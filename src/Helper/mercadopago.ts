@@ -25,9 +25,9 @@ export const mercadoPagoLink = async (products:Iitem[]) => {
                 }
             }),
     
-            // notification_url :'http://localhost:3001/notification'
+           
             notification_url : 'https://back-production-2a09.up.railway.app/notification'
-            // notification_url : 'https://a798-2800-810-513-807a-c1ea-d51f-80ee-1f5c.sa.ngrok.io/notification'
+        
 
 
           };
