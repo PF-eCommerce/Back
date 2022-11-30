@@ -1,10 +1,12 @@
-import axios from 'axios'
+
 // const { emailPayment } = require('../helper/confirmEmail')
 import {mercadoPagoLink} from '../Helper/mercadopago'
 import {OrderModel} from '../model/OrderModel'
 // const Product = require('../models/Product')
 import {Idata, IorderItem, Ilocation, Ipayment} from '../types'
 import {Request, Response} from 'express'
+import mercadopago  from 'mercadopago'
+
 // import * as mongoose from "mongoose"
 
 let order: any
@@ -22,7 +24,7 @@ export const postOrder = async (req: Request, res: Response) => {
     let input = data[2] as Ipayment
      const id = req.params.id
     
-     console.log('ENTRA A POSTORDER', productArray)
+     
      if(productArray) {
         
        order = new OrderModel({ 
@@ -77,39 +79,30 @@ export const postOrder = async (req: Request, res: Response) => {
 }
 
 export const notification = async (req: Request, res: Response) => {
-    const datos = req.query
-    console.log('ASDASDASD')
- 
-
-    const idStatus = datos["data.id"]
-    console.log(idStatus)
+    const {query} = req
+    
+    
     try {
-        const dataCompra = await axios(`https://api.mercadopago.com/v1/payments/${idStatus}` , {
-            headers: { 'Authorization' : 'Bearer '+process.env.ACCESS_TOKEN }
-              
-            })
+        
+         const paymentId = query.id || query["data.id"] 
+        const data = await mercadopago.payment.findById(Number(paymentId))
+               
            
           
-        if(dataCompra.data.status ){
-           
-          
-            order.status = dataCompra.data.status
-            if(dataCompra.data.status === 'approved') {
-                order.totalPrice = dataCompra.data.transaction_amount
-                order.isPaid = true   
-            }
-                       
-             await order.save()
-          
+        if(data) {
+            
+              order.status = data.body.status
+              if(data.body.status === 'approved'){
+                order.totalPrice = data.body.transaction_amount
+                order.isPaid = true  
+              }
+
+              await order.save()
         }
+       res.status(200)
         
     } catch (error) {
-        //console.log(error)
+        console.log(error)
     }
-    res.status(200)
+    
 }
-// module.exports = {
-//     postOrder,
-//     notification
-
-// }
