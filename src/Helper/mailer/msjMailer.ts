@@ -1,5 +1,5 @@
 import {transports } from './mailer'
-import {Iregister, IforgotPassword, Ipayment} from '../../types'
+import {Iregister, IforgotPassword, IEmail} from '../../types'
 
     export const emailRegister = async (datos : Iregister) =>{
         
@@ -29,15 +29,14 @@ import {Iregister, IforgotPassword, Ipayment} from '../../types'
             <p> Si tu no solicitaste el cambio de contraseña por "olvidaste tu contraseña", alguien intenta hackearte </p>`
             })
     }
-    export const emailPayment = async (datos : Ipayment) =>{
-          const {link,local, email} = datos
+    export const emailPayment = async (datos : IEmail) =>{
+          const {link, email} = datos
             await transports.sendMail({
             from : `"TresBien - eCommerce Indumentaria" <tresbien.ecommerce@gmail.com>`,
             to: email,
             subject : 'Tu orden',
             text : 'Tu compra',
             html : `<p>Hola, aqui esta tu orden.</p>
-            <p>elegiste el local ${local}.</p>
                     <a href="${link}">proceder a comprar</a> </p>
                     <p> Si tu ya hiciste la compra , puedes obviar este email</p>`
         })
