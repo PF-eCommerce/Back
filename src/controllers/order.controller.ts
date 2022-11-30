@@ -4,7 +4,7 @@ import { Iorder /*IOrderFInal*/ } from "../types";
 
 export const getAllOrders = async (_req: Request, res: Response) => {
   try {
-    const orders: Array<Iorder> = await Order.find({ exist: true });
+    const orders: Array<Iorder> = await Order.find();
     const ordersProducts = orders.map((el) => el.orderItems).flat();
     if (ordersProducts) {
       const itemsPrices = ordersProducts
