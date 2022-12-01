@@ -253,8 +253,14 @@ export const getAllProducts = async (_req: Request, res: Response) => {
         id: el._id,
         title: el.title,
         price: el.price,
-        img: el.img[0],
+        img: el.img,
         inStock: el.inStock,
+        desc:el.desc,
+        numStock:el.numStock,
+        men:el.men,
+        woman:el.woman,
+        date:el.date,
+        exists:el.exists
       };
     });
     res.status(200).json(product);
