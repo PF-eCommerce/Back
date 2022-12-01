@@ -250,7 +250,7 @@ export const getAllProducts = async (_req: Request, res: Response) => {
 
     const product = products.map((el) => {
       return {
-        id: el._id,
+        _id: el._id,
         title: el.title,
         price: el.price,
         img: el.img,
