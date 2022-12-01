@@ -154,14 +154,21 @@ export const getProduct = async (
     const size = req.query.size as string;
 
     const color = req.query.color as string;
-
+    
+    let exists : boolean = false;
+    console.log('REQ QUERY' , req.query)
+    if (!type && !size && !color){
+        exists = true;
+    }
+    
+    console.log('REQ QUERY' , exists)
     /* 
         no tiene $regedex por lo que el match debe ser exacto 
         IMPORTANTE  el parametro que no se use debe ser recibido como null
         */
 
     const allProducts = await Product.paginate(
-      { $or: [{ type }, { size }, { color }] },
+      { $or: [{ type }, { size }, { color } , {exists}] },
       options
     );
 
@@ -246,8 +253,14 @@ export const getAllProducts = async (_req: Request, res: Response) => {
         id: el._id,
         title: el.title,
         price: el.price,
-        img: el.img[0],
+        img: el.img,
         inStock: el.inStock,
+        desc:el.desc,
+        numStock:el.numStock,
+        men:el.men,
+        woman:el.woman,
+        date:el.date,
+        exists:el.exists
       };
     });
     res.status(200).json(product);
