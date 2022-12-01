@@ -106,7 +106,7 @@ const hasDuplicates = (array: Array<any>) => {
 
 export const productsPurchased = async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const orders = await Order.find({ user: userId });
+  const orders = await Order.find({ user: userId }).sort({ date: -1 });
   if (orders) {
     const ordersProducts = orders.map((el) => el.orderItems).flat();
 
