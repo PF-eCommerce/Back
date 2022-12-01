@@ -121,9 +121,8 @@ export interface Iregister {
 
 export type IforgotPassword = Omit<Iregister, "userName">;
 
-export interface Ipayment {
+export interface IEmail {
   link: string;
-  local: string;
   email: string;
 }
 export interface ICustomer {
@@ -200,6 +199,7 @@ export interface IpasarelaCompras {
   userId: string;
   location?: Ilocation;
   input?: Ipayment;
+  email : string
 }
 
 export interface Iitem extends IorderItem {
