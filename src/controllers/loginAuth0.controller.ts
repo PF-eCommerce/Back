@@ -57,7 +57,13 @@ export const getUser = async (req: Request, res: Response) => {
 
       res.status(200).json(user);
     }
-
+       
+    if(email_verified) {
+      newUser[0].email_verified = true
+      await newUser[0].save()
+    }
     res.status(200).json(...newUser);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 };

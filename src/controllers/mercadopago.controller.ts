@@ -1,5 +1,5 @@
 
-// const { emailPayment } = require('../helper/confirmEmail')
+import { emailPayment } from '../Helper/mailer/msjMailer'
 import {mercadoPagoLink} from '../Helper/mercadopago'
 import {OrderModel} from '../model/OrderModel'
 // const Product = require('../models/Product')
@@ -22,9 +22,11 @@ export const postOrder = async (req: Request, res: Response) => {
     let location = data[1] as Ilocation
     
     let input = data[2] as Ipayment
+    let email = data[3] as string
      const id = req.params.id
-    
      
+    
+      
      if(productArray) {
         
        order = new OrderModel({ 
@@ -57,8 +59,8 @@ export const postOrder = async (req: Request, res: Response) => {
         await order.save();
         
         const link:string = await mercadoPagoLink(productArray)
-           
-        //  emailPayment(link, userId, input?.email)
+          
+          emailPayment({link , email}) 
         
          res.send(link)
      }
@@ -66,12 +68,7 @@ export const postOrder = async (req: Request, res: Response) => {
     
      
     
-    //  const link:string = await mercadoPagoLink(productArray)
-       
-    //  emailPayment(link, data[1], data[2].email)
-     
-    //  res.send(link)
-   // res.status(404)
+
    } catch (error) {
     console.log('ERROR',error)
    }
