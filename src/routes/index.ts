@@ -9,7 +9,7 @@ import plebRoutes from "./user/user.routes";
 import reviewRoutes from "./review/review.routes";
 import mercadoPagoRoutes from "./mercadoPago/mercadoPago.routes";
 import orderRoutes from "./order/order.routes";
-
+import contableRoutes from "./contable/contable.routes";
 
 const router = Router();
 
@@ -23,5 +23,6 @@ router.use(plebRoutes);
 router.use(auth0);
 router.use(reviewRoutes);
 router.use(mercadoPagoRoutes);
+router.use(contableRoutes);
 
 export default router;
