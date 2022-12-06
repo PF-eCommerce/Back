@@ -242,7 +242,7 @@ export const updateProduct = async (
   }
 };
 
-export const getAllProducts = async (_req: Request, res: Response) => {
+export const getAllProductsRemix = async (_req: Request, res: Response) => {
   try {
     const products: IProduct[] = await Product.find();
     if (!products)
@@ -261,6 +261,27 @@ export const getAllProducts = async (_req: Request, res: Response) => {
         woman:el.woman,
         date:el.date,
         exists:el.exists
+      };
+    });
+    res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllProducts = async (_req: Request, res: Response) => {
+  try {
+    const products: IProduct[] = await Product.find();
+    if (!products)
+      res.status(400).json({ error: true, msg: "no existe ningun producto" });
+
+    const product = products.map((el) => {
+      return {
+        id: el._id,
+        title: el.title,
+        price: el.price,
+        img: el.img,
+        inStock: el.inStock,
       };
     });
     res.status(200).json(product);

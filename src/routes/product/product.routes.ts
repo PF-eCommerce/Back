@@ -9,6 +9,7 @@ router.get("/products/genre", productFunction.getProductByGenre);
 router.get("/products/search", productFunction.getBySearch);
 router.get("/products/:id", productFunction.getProductById);
 router.get("/productsAll", productFunction.getAllProducts);
+router.get("/productsAllRemix", productFunction.getAllProductsRemix);
 router.put("/products/:id", productFunction.updateProduct);
 router.delete("/products/:id", productFunction.deleteProduct);
 
